@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: {{ cookiecutter.__spdx_text }}
+# SPDX-License-Identifier: CC0-1.0
+
+.direnv/
+dist-newstyle/
+dist/
+result
+.env
+.envrc
+.pre-commit-config.yaml

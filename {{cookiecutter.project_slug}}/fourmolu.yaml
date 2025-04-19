@@ -1,0 +1,4 @@
+# SPDX-FileCopyrightText: {{ cookiecutter.__spdx_text }}
+# SPDX-License-Identifier: CC0-1.0
+
+indentation: 2

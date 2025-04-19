@@ -1,0 +1,58 @@
+# SPDX-FileCopyrightText: {{ cookiecutter.__spdx_text }}
+# SPDX-License-Identifier: CC0-1.0
+
+spec-version: 0.36.0
+
+name: {{cookiecutter.project_slug}}
+version: 0.0.1.0
+description: See README at {{cookiecutter.repo_url}}
+author: {{cookiecutter.__author_name_email}}
+maintainer: {{cookiecutter.__author_name_email}}
+license: {{cookiecutter.license}}
+license-file: ./LICENSES/{{cookiecutter.license}}.txt
+
+ghc-options: -Wall
+language: GHC2021
+default-extensions:
+- ApplicativeDo
+- ConstraintKinds
+- DataKinds
+- DeriveGeneric
+- FlexibleInstances
+- GeneralizedNewtypeDeriving
+- LambdaCase
+- OverloadedLabels
+- OverloadedRecordDot
+- OverloadedStrings
+- PartialTypeSignatures
+- QuasiQuotes
+- RecordWildCards
+- ScopedTypeVariables
+- StandaloneDeriving
+- TupleSections
+- TypeApplications
+- ViewPatterns
+
+executable:
+  main: Main.hs
+  source-dirs: app
+  generated-other-modules: 
+    Paths_{{ cookiecutter.project_slug.replace('-', '_') }}
+  dependencies:
+    base:
+      mixin: hiding (Prelude)
+    relude:
+      mixin:
+        - (Relude as Prelude)
+        - ""
+    {{cookiecutter.project_slug}}:
+
+library:
+  source-dirs: src
+  dependencies:
+    base:
+      mixin: hiding (Prelude)
+    relude:
+      mixin:
+        - (Relude as Prelude)
+        - ""

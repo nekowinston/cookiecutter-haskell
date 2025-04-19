@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: {{ cookiecutter.__spdx_text }}
+# SPDX-License-Identifier: CC0-1.0
+
+version = 1
+SPDX-PackageName = "{{ cookiecutter.project_slug }}"
+SPDX-PackageSupplier = "{{ cookiecutter.__author_name_email }}"
+SPDX-PackageDownloadLocation = "{{ cookiecutter.repo_url }}"
+
+[[annotations]]
+path = ["*.cabal", "*.json", "**.lock"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "{{ cookiecutter.__spdx_text }}"
+SPDX-License-Identifier = "CC0-1.0"
