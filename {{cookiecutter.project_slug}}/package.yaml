@@ -9,7 +9,9 @@ description: See README at {{cookiecutter.repo_url}}
 author: {{cookiecutter.__author_name_email}}
 maintainer: {{cookiecutter.__author_name_email}}
 license: {{cookiecutter.license}}
+{% if cookiecutter.use_reuse -%}
 license-file: ./LICENSES/{{cookiecutter.license}}.txt
+{%- endif %}
 
 ghc-options: -Wall
 language: GHC2021
@@ -33,6 +35,7 @@ default-extensions:
 - TypeApplications
 - ViewPatterns
 
+{% if cookiecutter.executable -%}
 executable:
   main: Main.hs
   source-dirs: app
@@ -45,8 +48,12 @@ executable:
       mixin:
         - (Relude as Prelude)
         - ""
+{%- if cookiecutter.library %}
     {{cookiecutter.project_slug}}:
+{%- endif %}
+{%- endif %}
 
+{% if cookiecutter.library -%}
 library:
   source-dirs: src
   dependencies:
@@ -56,3 +63,4 @@ library:
       mixin:
         - (Relude as Prelude)
         - ""
+{%- endif %}

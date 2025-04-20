@@ -24,13 +24,13 @@
         "x86_64-linux"
       ];
 
-      flake.nixosModules = {
-        default = self.nixosModules.{{cookiecutter.project_slug}};
-        {{cookiecutter.project_slug}} = import ./nix/modules/nixos.nix { inherit self; };
-      };
+      # flake.nixosModules = {
+      #   default = self.nixosModules.{{cookiecutter.project_slug}};
+      #   {{cookiecutter.project_slug}} = import ./nix/modules/nixos.nix { inherit self; };
+      # };
 
       flake.overlays.default = final: prev: {
-        {{cookiecutter.project_slug}} = final.haskell.lib.justStaticExecutables final.haskellPackages.{{cookiecutter.project_slug}};
+        {{ cookiecutter.project_slug }} = final.haskell.lib.justStaticExecutables final.haskellPackages.{{ cookiecutter.project_slug }};
 
         haskellPackages = prev.haskellPackages.override (old: {
           overrides = final.lib.composeExtensions (old.overrides or (_: _: { })) (
@@ -72,9 +72,10 @@
             nativeBuildInputs = with pkgs; [
               cabal-install
               cabal2nix # pushd nix && cabal2nix ../. > default.nix && popd
+              ghcid
+              haskell-language-server
               haskellPackages.implicit-hie
               haskellPackages.retrie
-              haskell-language-server
               hlint
               hpack
 

@@ -6,8 +6,9 @@
 }:
 pkgs.mkShell {
   nativeBuildInputs = with pkgs; [
-    python3
     basedpyright
+    cookiecutter
+    python3
     ruff
   ];
 }
