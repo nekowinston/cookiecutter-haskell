@@ -2,6 +2,8 @@
 # SPDX-License-Identifier: CC0-1.0
 
 {
+  description = "Dev flake for {{cookiecutter.project_name}}";
+
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";

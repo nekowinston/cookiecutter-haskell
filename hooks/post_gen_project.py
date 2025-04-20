@@ -14,18 +14,6 @@ nix_run: C[[list[str]], int] = lambda args: subprocess.call(
 )
 
 if __name__ == "__main__":
-    info("Initializing flake.lock...")
-    _ = subprocess.call(["nix", "flake", "lock"])
-
-    info("Running the initial hpack...")
-    _ = nix_run(["hpack"])
-
-    info("Running fourmolu...")
-    _ = nix_run(["fourmolu", "-i", "app", "src"])
-
-    info("Running nix fmt")
-    _ = subprocess.call(["nix", "fmt", "--", "flake.nix"])
-
     if "{{ cookiecutter.use_reuse }}" == "True":
         info("Setting up REUSE...")
         # only keep the used licenses
@@ -39,6 +27,18 @@ if __name__ == "__main__":
 
         shutil.rmtree(pathlib.Path("LICENSES"))
         pathlib.Path("REUSE.toml").unlink()
+
+    info("Initializing flake.lock...")
+    _ = subprocess.call(["nix", "flake", "lock"])
+
+    info("Running the initial hpack...")
+    _ = nix_run(["hpack"])
+
+    info("Running fourmolu...")
+    _ = nix_run(["fourmolu", "-i", "app", "src"])
+
+    info("Running nix fmt")
+    _ = subprocess.call(["nix", "fmt", "--", "flake.nix"])
 
     if "{{ cookiecutter.is_executable }}" == "False":
         shutil.rmtree(pathlib.Path("app"))
