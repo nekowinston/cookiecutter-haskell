@@ -9,14 +9,6 @@
     "GPL-3.0-or-later",
     "MIT"
   ],
-  "_licenseNix": {
-    "AGPL-3.0-only": "agpl3Only",
-    "AGPL-3.0-or-later": "agpl3Plus",
-    "BSD-3-Clause": "bsd3",
-    "GPL-3.0-only": "gpl3Only",
-    "GPL-3.0-or-later": "gpl3Plus",
-    "MIT": "mit"
-  },
   "author_name": "winston",
   "author_email": "hey@winston.sh",
   "repo_url": "https://code.winston.sh/winston/{{ cookiecutter.project_slug }}",
