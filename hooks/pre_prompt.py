@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2025 winston <hey@winston.sh>
+# SPDX-License-Identifier: MIT
+
 import sys
 import subprocess
 from typing import Callable as C

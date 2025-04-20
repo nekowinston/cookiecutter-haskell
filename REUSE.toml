@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: 2025 winston <hey@winston.sh>
+# SPDX-License-Identifier: CC0-1.0
+
+version = 1
+SPDX-PackageName = "cookiecutter-haskell"
+SPDX-PackageSupplier = "winston <hey@winston.sh>"
+SPDX-PackageDownloadLocation = "https://code.winston.sh/winston/cookiecutter-haskell"
+
+[[annotations]]
+path = ["{{cookiecutter.project_slug}}/**/*"]
+precedence = "override"
+SPDX-FileCopyrightText = "2025 winston <hey@winston.sh>"
+SPDX-License-Identifier = "MIT"

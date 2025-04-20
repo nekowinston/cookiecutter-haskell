@@ -1,4 +1,6 @@
-#!/usr/bin/env python
+# SPDX-FileCopyrightText: 2025 winston <hey@winston.sh>
+# SPDX-License-Identifier: MIT
+
 import pathlib
 import shutil
 import subprocess
