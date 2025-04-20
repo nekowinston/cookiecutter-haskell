@@ -25,24 +25,26 @@
       ];
 
       # flake.nixosModules = {
-      #   default = self.nixosModules.{{cookiecutter.project_slug}};
-      #   {{cookiecutter.project_slug}} = import ./nix/modules/nixos.nix { inherit self; };
+      #   default = self.nixosModules.{{ cookiecutter.project_slug }};
+      #   {{ cookiecutter.project_slug }} = import ./nix/modules/nixos.nix { inherit self; };
       # };
 
       flake.overlays.default = final: prev: {
+        {% if cookiecutter.is_executable and not cookiecutter.is_library -%}
         {{ cookiecutter.project_slug }} = final.haskell.lib.justStaticExecutables final.haskellPackages.{{ cookiecutter.project_slug }};
+        {%- endif %}
 
         haskellPackages = prev.haskellPackages.override (old: {
           overrides = final.lib.composeExtensions (old.overrides or (_: _: { })) (
             hFinal: hPrev: {
-              {{cookiecutter.project_slug}} = (final.haskellPackages.callPackage ./nix { }).overrideAttrs {
+              {{ cookiecutter.project_slug }} = (final.haskellPackages.callPackage ./nix { }).overrideAttrs {
                 src = builtins.path {
                   path = final.nix-gitignore.gitignoreSourcePure ''
                     flake.nix
                     flake.lock
                     nix/*
                   '' ./.;
-                  name = "{{cookiecutter.project_slug}}";
+                  name = "{{ cookiecutter.project_slug }}";
                 };
               };
             }
@@ -67,7 +69,7 @@
 
           devShells.default = pkgs.haskellPackages.shellFor {
             packages = p: [
-              p.{{cookiecutter.project_slug}}
+              p.{{ cookiecutter.project_slug }}
             ];
             nativeBuildInputs = with pkgs; [
               cabal-install
@@ -79,7 +81,9 @@
               hlint
               hpack
 
+              {% if cookiecutter.use_reuse -%}
               reuse
+              {%- endif %}
               self'.formatter
             ];
             shellHook = config.pre-commit.installationScript;
@@ -88,8 +92,12 @@
           formatter = pkgs.nixfmt-rfc-style;
 
           packages = {
-            default = pkgs.{{cookiecutter.project_slug}};
-            {{cookiecutter.project_slug}} = pkgs.{{cookiecutter.project_slug}};
+            default = self'.packages.{{ cookiecutter.project_slug }};
+            {% if cookiecutter.is_executable and not cookiecutter.is_library -%}
+            {{ cookiecutter.project_slug }} = pkgs.{{ cookiecutter.project_slug }};
+            {%- else %}
+            {{ cookiecutter.project_slug }} = pkgs.haskellPackages.{{ cookiecutter.project_slug }};
+            {%- endif %}
           };
 
           pre-commit.settings.hooks = {
@@ -100,13 +108,17 @@
               enable = true;
               excludes = [ "nix/default.nix" ];
             };
+            {% if cookiecutter.use_reuse -%}
             reuse.enable = true;
+            {%- endif %}
           };
         };
     };
 
+  {% if cookiecutter.author_name == "winston" -%}
   nixConfig = {
     extra-substituters = [ "https://attic.winston.sh/public" ];
     extra-trusted-public-keys = [ "public:gqpCDffg2eWolOCakuF0FhU0hmPHvOiBy2Z2rpyf8Mg=" ];
   };
+  {%- endif %}
 }

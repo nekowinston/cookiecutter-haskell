@@ -1,7 +1,7 @@
 -- SPDX-FileCopyrightText: {{ cookiecutter.__spdx_text }}
 -- SPDX-License-Identifier: {{ cookiecutter.license }}
 
-{%- if cookiecutter.library %}
+{%- if cookiecutter.is_library %}
 import Lib
 
 main :: IO ()

@@ -3,14 +3,14 @@
 
 spec-version: 0.36.0
 
-name: {{cookiecutter.project_slug}}
+name: {{ cookiecutter.project_slug }}
 version: 0.0.1.0
-description: See README at {{cookiecutter.repo_url}}
-author: {{cookiecutter.__author_name_email}}
-maintainer: {{cookiecutter.__author_name_email}}
-license: {{cookiecutter.license}}
+description: See README at {{ cookiecutter.repo_url }}
+author: {{ cookiecutter.__author_name_email }}
+maintainer: {{ cookiecutter.__author_name_email }}
+license: {{ cookiecutter.license }}
 {% if cookiecutter.use_reuse -%}
-license-file: ./LICENSES/{{cookiecutter.license}}.txt
+license-file: ./LICENSES/{{ cookiecutter.license }}.txt
 {%- endif %}
 
 ghc-options: -Wall
@@ -35,7 +35,7 @@ default-extensions:
 - TypeApplications
 - ViewPatterns
 
-{% if cookiecutter.executable -%}
+{% if cookiecutter.is_executable -%}
 executable:
   main: Main.hs
   source-dirs: app
@@ -48,12 +48,12 @@ executable:
       mixin:
         - (Relude as Prelude)
         - ""
-{%- if cookiecutter.library %}
-    {{cookiecutter.project_slug}}:
+{%- if cookiecutter.is_library %}
+    {{ cookiecutter.project_slug }}:
 {%- endif %}
 {%- endif %}
 
-{% if cookiecutter.library -%}
+{% if cookiecutter.is_library -%}
 library:
   source-dirs: src
   dependencies:

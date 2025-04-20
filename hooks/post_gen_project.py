@@ -2,29 +2,14 @@
 import pathlib
 import shutil
 import subprocess
+from typing import Callable as C
 
-
-def info(s: str):
-    print(f"λ \033[1;33m{s}\033[1;0m")
-
-
-def warn(s: str):
-    print(f"λ \033[1;31m{s}\033[1;0m")
-
-
-def error(s: str):
-    print(f"λ \033[1;41m{s}\033[1;0m")
-
-
-def nix_run(args: list[str]) -> int:
-    cmd, *args = args
-    if len(args) > 0:
-        args.insert(0, "--")
-
-    return subprocess.call(
-        ["nix", "run", "--inputs-from", ".", f"nixpkgs#{cmd}"] + args
-    )
-
+info: C[[str], None] = lambda str: print(f"λ \033[1;33m{str}\033[1;0m")
+warn: C[[str], None] = lambda str: print(f"λ \033[1;31m{str}\033[1;0m")
+error: C[[str], None] = lambda str: print(f"λ \033[1;41m{str}\033[1;0m")
+nix_run: C[[list[str]], int] = lambda args: subprocess.call(
+    ["nix", "run", "--inputs-from", ".", f"nixpkgs#{args[0]}"] + (["--"] + args[1:])
+)
 
 if __name__ == "__main__":
     info("Initializing flake.lock...")
@@ -35,6 +20,9 @@ if __name__ == "__main__":
 
     info("Running fourmolu...")
     _ = nix_run(["fourmolu", "-i", "app", "src"])
+
+    info("Running nix fmt")
+    _ = subprocess.call(["nix", "fmt", "--", "flake.nix"])
 
     if "{{ cookiecutter.use_reuse }}" == "True":
         info("Setting up REUSE...")
@@ -50,10 +38,10 @@ if __name__ == "__main__":
         shutil.rmtree(pathlib.Path("LICENSES"))
         pathlib.Path("REUSE.toml").unlink()
 
-    if "{{ cookiecutter.executable }}" == "False":
+    if "{{ cookiecutter.is_executable }}" == "False":
         shutil.rmtree(pathlib.Path("app"))
 
-    if "{{ cookiecutter.library }}" == "False":
+    if "{{ cookiecutter.is_library }}" == "False":
         shutil.rmtree(pathlib.Path("src"))
 
     info("Initializing Git...")

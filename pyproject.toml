@@ -1,0 +1,5 @@
+[tool.basedpyright]
+reportUnnecessaryComparison = "none"
+
+[tool.ruff.lint]
+ignore = ["E731"]
